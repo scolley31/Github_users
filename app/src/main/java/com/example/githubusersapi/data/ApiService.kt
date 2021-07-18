@@ -12,7 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val BASE_URL = " https://api.github.com/"
+private const val BASE_URL = "https://api.github.com/"
 //How to build the API by Retrofit? : URL,Converterfactory
 
 /**
@@ -87,5 +87,7 @@ interface UsersApiApiService {
  */
 //Below the MarsApiService interface, define a public object called MarsApi to initialize the Retrofit service.
 object UsersApi {
+
     val retrofitService : UsersApiApiService by lazy { retrofit.create(UsersApiApiService::class.java) }
+
 }

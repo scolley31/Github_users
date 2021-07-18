@@ -1,36 +1,30 @@
 package com.example.githubusersapi.data
 
 import android.os.Parcelable
+import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
-
-@Parcelize
-data class Users (
-
-    val users: List<User>
-
-): Parcelable
 
 @Parcelize
 data class User (
 
     val login: String,
     val id: Int,
-    val node_id: String,
-    val avatar_url: String,
-    val gravatar_id: String,
+    @Json(name = "node_id") val nodeId: String,
+    @Json(name = "avatar_url") val avatar: String,
+    @Json(name = "gravatar_id") val gravatarId: String,
     val url: String,
-    val html_url: String,
-    val followers_url: String,
-    val following_url: String,
-    val gists_url: String,
-    val starred_url: String,
-    val subscriptions_url: String,
-    val organizations_url: String,
-    val repos_url: String,
-    val events_url: String,
-    val received_events_url: String,
+    @Json(name = "html_url") val htmlId: String,
+    @Json(name = "followers_url") val followersUrl: String,
+    @Json(name = "following_url") val followingUrl: String,
+    @Json(name = "gists_url") val gistsUrl: String,
+    @Json(name = "starred_url") val starredUrl: String,
+    @Json(name = "subscriptions_url") val subscriptionsUrl: String,
+    @Json(name = "organizations_url") val organizationsUrl: String,
+    @Json(name = "repos_url") val reposUrl: String,
+    @Json(name = "events_url") val eventsUrl: String,
+    @Json(name = "received_events_url") val receivedEventsUrl: String,
     val type: String,
-    val site_admin: Boolean
+    @Json(name = "site_admin") val siteAdmin: Boolean
 
 ): Parcelable

@@ -5,12 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubusersapi.data.User
-import com.example.githubusersapi.data.Users
 import com.example.githubusersapi.data.UsersApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class OverviewViewModel: ViewModel() {
 
@@ -26,24 +22,36 @@ class OverviewViewModel: ViewModel() {
     // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
+    lateinit var result : List<User>
+
     init {
-        getUsers()
-    }
-
-    private fun getUsers() {
         coroutineScope.launch {
-
-            try {
-                // this will run on a thread managed by Retrofit
-                val result = UsersApi.retrofitService.getUsers()
-
-                _users.value = result
-
-            } catch (e: Exception) {
-                Log.i("Demo", "exception=${e.message}")
-            }
+            getUsers()
         }
     }
 
+    suspend fun getUsers() {
+        coroutineScope.launch {
+
+            withContext(Dispatchers.IO) {
+                try {
+                    // this will run on a thread managed by Retrofit
+                    result = UsersApi.retrofitService.getUsers()
+
+                } catch (e: Exception) {
+                    Log.i("Demo", "exception=${e.message}")
+                }
+            }
+
+            _users.value = result
+            Log.d("users", "_users.value = ${_users.value}")
+
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
 
 }
