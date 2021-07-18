@@ -24,11 +24,11 @@ class OverviewViewModel: ViewModel() {
 
     lateinit var result : List<User>
 
-//    init {
-//        coroutineScope.launch {
-//            getUsers()
-//        }
-//    }
+    init {
+        coroutineScope.launch {
+            getUsers()
+        }
+    }
 
     private suspend fun getUsers() {
 
