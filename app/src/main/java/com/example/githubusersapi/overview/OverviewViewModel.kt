@@ -10,10 +10,10 @@ import kotlinx.coroutines.*
 
 class OverviewViewModel: ViewModel() {
 
-    private val _users = MutableLiveData<List<User>>()
+    private val _users = MutableLiveData<List<DataItem>>()
 
     // The external LiveData interface to the property is immutable, so only this class can modify
-    val users: LiveData<List<User>>
+    val users: LiveData<List<DataItem>>
         get() = _users
 
     // Create a Coroutine scope using a job to be able to cancel when needed
@@ -24,15 +24,15 @@ class OverviewViewModel: ViewModel() {
 
     lateinit var result : List<User>
 
-    init {
-        coroutineScope.launch {
-            getUsers()
-        }
-    }
+//    init {
+//        coroutineScope.launch {
+//            getUsers()
+//        }
+//    }
 
-    suspend fun getUsers() {
-        coroutineScope.launch {
+    private suspend fun getUsers() {
 
+        coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 try {
                     // this will run on a thread managed by Retrofit
@@ -43,10 +43,23 @@ class OverviewViewModel: ViewModel() {
                 }
             }
 
-            _users.value = result
+            _users.value = toDataItem(result)
             Log.d("users", "_users.value = ${_users.value}")
 
         }
+    }
+
+    fun toDataItem(Users: List<User>): List<DataItem> {
+        val items = mutableListOf<DataItem>()
+        Users?.let {
+            for ((index, Users) in Users.withIndex()){
+                when (index % 2) {
+                    0 -> items.add(DataItem.Right(Users))
+                    1 -> items.add(DataItem.Left(Users))
+                }
+            }
+        }
+        return items
     }
 
     override fun onCleared() {

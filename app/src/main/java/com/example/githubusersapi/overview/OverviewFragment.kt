@@ -30,16 +30,15 @@ class OverviewFragment: Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        binding.recyclerOverview.layoutManager = LinearLayoutManager(context)
+        binding.recyclerOverview.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        binding.recyclerOverview.adapter = OverviewAdapter(viewModel)
+
         viewModel.users.observe(viewLifecycleOwner, Observer{
             it?.let {
                 Log.d("users","viewModel.users.value = ${viewModel.users.value}")
             }
         })
-
-        binding.recyclerOverview.layoutManager = LinearLayoutManager(context)
-        binding.recyclerOverview.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        binding.recyclerOverview.adapter = OverviewAdapter(viewModel)
-
 
         return binding.root
     }

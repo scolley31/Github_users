@@ -11,8 +11,8 @@
             name="viewModel"
             type="com.example.githubusersapi.overview.OverviewViewModel" />
         <variable
-            name="right"
-            type="com.example.githubusersapi.overview.DataItem.Right" />
+            name="left"
+            type="com.example.githubusersapi.overview.DataItem.Left" />
 
     </data>
 
@@ -27,36 +27,38 @@
             android:id="@+id/avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
+            app:glide="@{left.user.avatar}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            app:glide="@{right.user.avatar}"/>
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:text="@{String.valueOf(right.user.id)}"
+            android:text="@{String.valueOf(left.user.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintEnd_toStartOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@{right.user.login}"
-            app:layout_constraintBottom_toBottomOf="@+id/id"
-            app:layout_constraintStart_toEndOf="@+id/id"
-            app:layout_constraintTop_toTopOf="@+id/id" />
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@{left.user.login}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/id"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

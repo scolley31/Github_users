@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.githubusersapi.data.User
+import com.example.githubusersapi.overview.DataItem
 import com.example.githubusersapi.overview.OverviewAdapter
 
 
 @BindingAdapter("users")
-fun bindRecyclerViewWithPlan(recyclerView: RecyclerView, users: List<User>?) {
+fun bindRecyclerViewWithPlan(recyclerView: RecyclerView, users: List<DataItem>?) {
     users?.let {
         recyclerView.adapter?.apply {
             when (this) {
