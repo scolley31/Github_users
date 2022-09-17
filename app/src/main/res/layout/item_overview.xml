@@ -5,58 +5,35 @@
 
     <data>
         <variable
-            name="user"
-            type="com.example.githubusersapi.data.User" />
-        <variable
             name="viewModel"
             type="com.example.githubusersapi.overview.OverviewViewModel" />
         <variable
-            name="right"
-            type="com.example.githubusersapi.overview.DataItem.Right" />
+            name="divider"
+            type="com.example.githubusersapi.overview.DataItem.Divider" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_EEEBEB"
         android:elevation="3dp"
-        android:layout_margin="20dp">
-
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"
-            app:glide="@{right.user.avatar}"/>
+        android:layout_marginTop="25dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp">
 
         <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
+            android:id="@+id/divider_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{String.valueOf(right.user.id)}"
+            android:text="@{divider.news.title}"
+            android:textAlignment="viewStart"
+            android:textSize="24sp"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@{right.user.login}"
-            app:layout_constraintBottom_toBottomOf="@+id/id"
-            app:layout_constraintStart_toEndOf="@+id/id"
-            app:layout_constraintTop_toTopOf="@+id/id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

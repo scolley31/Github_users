@@ -4,58 +4,60 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubusersapi.data.User
+import com.example.githubusersapi.data.Item
 import com.example.githubusersapi.data.UsersApi
+import com.example.githubusersapi.data.Items
+import com.example.githubusersapi.data.NewsDate
 import kotlinx.coroutines.*
 
 class OverviewViewModel: ViewModel() {
 
-    private val _users = MutableLiveData<List<DataItem>>()
+    companion object {
+        const val DIVIDER = "divider"
+        const val NEWS = "news"
+    }
 
-    // The external LiveData interface to the property is immutable, so only this class can modify
-    val users: LiveData<List<DataItem>>
-        get() = _users
+    private val _news = MutableLiveData<List<DataItem>?>()
+    val news: LiveData<List<DataItem>?>
+        get() = _news
 
-    // Create a Coroutine scope using a job to be able to cancel when needed
     private var viewModelJob = Job()
 
-    // the Coroutine runs using the Main (UI) dispatcher
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    lateinit var result : List<User>
+    private lateinit var result : NewsDate
 
     init {
         coroutineScope.launch {
-            getUsers()
+            getVectors()
         }
     }
 
-    private suspend fun getUsers() {
+    private suspend fun getVectors() {
 
         coroutineScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    // this will run on a thread managed by Retrofit
-                    result = UsersApi.retrofitService.getUsers()
-
+                    result = UsersApi.retrofitService.getNews()
                 } catch (e: Exception) {
                     Log.i("Demo", "exception=${e.message}")
                 }
             }
-
-            _users.value = toDataItem(result)
-            Log.d("users", "_users.value = ${_users.value}")
-
+            _news.value = toDataItem(result)
         }
     }
 
-    fun toDataItem(Users: List<User>): List<DataItem> {
+    fun toDataItem(News: NewsDate?): List<DataItem> {
         val items = mutableListOf<DataItem>()
-        Users?.let {
-            for ((index, Users) in Users.withIndex()){
-                when (index % 2) {
-                    0 -> items.add(DataItem.Right(Users))
-                    1 -> items.add(DataItem.Left(Users))
+        News?.let {
+            it.getVector?.items?.forEach { item ->
+                when(item.type) {
+                    DIVIDER -> items.add(DataItem.Divider(item))
+                    NEWS -> {
+                        if (item.isDateNoMissing()) {
+                            items.add(DataItem.News(item))
+                        }
+                    }
                 }
             }
         }
@@ -65,6 +67,10 @@ class OverviewViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    private fun Item.isDateNoMissing(): Boolean{
+        return !(this.appearance?.mainTitle.isNullOrEmpty() || this.appearance?.subTitle.isNullOrEmpty() || this.appearance?.thumbnail.isNullOrEmpty() || this.extra?.created == null)
     }
 
 }

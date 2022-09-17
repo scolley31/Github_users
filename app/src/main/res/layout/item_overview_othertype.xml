@@ -5,60 +5,72 @@
 
     <data>
         <variable
-            name="user"
-            type="com.example.githubusersapi.data.User" />
-        <variable
             name="viewModel"
             type="com.example.githubusersapi.overview.OverviewViewModel" />
         <variable
-            name="left"
-            type="com.example.githubusersapi.overview.DataItem.Left" />
+            name="news"
+            type="com.example.githubusersapi.overview.DataItem.News" />
+
+        <import type="com.example.githubusersapi.util.TimeConverter" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_EEEBEB"
-        android:elevation="3dp"
-        android:layout_margin="20dp">
+        android:layout_marginTop="25dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp">
 
         <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            app:glide="@{left.user.avatar}"
+            android:id="@+id/iv_news_image"
+            glide="@{news.news.appearance.thumbnail}"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_create_time"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{String.valueOf(left.user.id)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/avatar"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_news_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_news_image" />
 
         <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="@{left.user.login}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/id"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="5dp"
+            android:lineHeight="15sp"
+            android:text="@{news.news.appearance.mainTitle}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/tv_create_time"
+            app:layout_constraintStart_toStartOf="@+id/tv_create_time"
+            app:layout_constraintTop_toBottomOf="@+id/tv_create_time" />
+
+        <TextView
+            android:id="@+id/tv_subTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:lineHeight="13sp"
+            android:text="@{news.news.appearance.subTitle}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_news_image"
+            app:layout_constraintEnd_toEndOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

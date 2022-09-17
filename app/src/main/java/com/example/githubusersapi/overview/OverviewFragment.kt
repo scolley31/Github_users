@@ -5,11 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubusersapi.databinding.FragmentOverviewBinding
@@ -31,12 +29,13 @@ class OverviewFragment: Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.recyclerOverview.layoutManager = LinearLayoutManager(context)
-        binding.recyclerOverview.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         binding.recyclerOverview.adapter = OverviewAdapter(viewModel)
 
-        viewModel.users.observe(viewLifecycleOwner, Observer{
+        viewModel.news.observe(viewLifecycleOwner, Observer{
             it?.let {
-                Log.d("users","viewModel.users.value = ${viewModel.users.value}")
+                it.forEach { item ->
+                    Log.d("users","viewModel.news.type = ${item}")
+                }
             }
         })
 

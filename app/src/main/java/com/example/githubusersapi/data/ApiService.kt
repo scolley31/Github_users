@@ -12,7 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val BASE_URL = "https://api.github.com/"
+private const val BASE_URL = "https://static.mixerbox.com/interview/"
 //How to build the API by Retrofit? : URL,Converterfactory
 
 /**
@@ -77,8 +77,8 @@ interface UsersApiApiService {
      * HTTP method
      */
 //    Call: create a retrofit service
-    @GET("users")
-    suspend fun getUsers(): List<User>
+    @GET("interview_get_vector.json")
+    suspend fun getNews(): NewsDate
 
 }
 /**
